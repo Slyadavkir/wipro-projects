@@ -13680,3 +13680,5 @@ org.eclipse.core.runtime.CoreException: Could not resolve artifact net.bytebuddy
 2026-05-14 01:09:21,392 [Worker-145: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Smita\eclipse-workspace\ContactManager\src\test\resources
 2026-05-14 01:10:04,161 [Worker-149: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
 2026-05-14 01:10:04,177 [Worker-149: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 0 resource
+2026-05-14 01:10:04,192 [Worker-149: Building] WARN  o.e.m.c.i.embedder.EclipseLogger - Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+2026-05-14 01:10:04,195 [Worker-149: Building] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory C:\Users\Smita\eclipse-workspace\ContactManager\src\test\resources
