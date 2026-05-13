@@ -3942,3 +3942,15 @@ Caused by: javax.crypto.AEADBadTagException: Tag mismatch!
 	at java.base/sun.security.ssl.SSLSocketInputRecord.decode(SSLSocketInputRecord.java:181)
 	at java.base/sun.security.ssl.SSLTransport.decode(SSLTransport.java:111)
 	... 11 more
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-05-14 01:09:21.330
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-05-14 01:09:21.391
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-05-14 01:10:04.169
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2026-05-14 01:10:04.194
+!MESSAGE Using platform encoding (Cp1252 actually) to copy filtered resources, i.e. build is platform dependent!
