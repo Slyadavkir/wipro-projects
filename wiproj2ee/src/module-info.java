@@ -1,2 +1,0 @@
-module wiproj2ee {
-}
