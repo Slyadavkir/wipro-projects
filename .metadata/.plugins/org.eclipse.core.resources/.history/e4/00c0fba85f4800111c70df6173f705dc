@@ -1,0 +1,22 @@
+package com.example.servlet;
+
+import java.io.IOException;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+
+@WebServlet("/Login")
+public class LoginServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String username = request.getParameter("username");
+
+        HttpSession session = request.getSession();
+        session.setAttribute("username", username);
+
+        RequestDispatcher rd = request.getRequestDispatcher("/Demo");
+        rd.forward(request, response);
+    }
+}

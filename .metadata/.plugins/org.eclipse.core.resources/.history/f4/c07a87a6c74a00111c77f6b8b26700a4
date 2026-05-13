@@ -1,0 +1,53 @@
+package com.wipro.ORMDemo;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class Student {
+
+    @Id
+    private int rollno;
+
+    private String name;
+
+    @Column(name = "email", unique = true)
+    private String email;
+
+    // Getter and Setter for rollno
+    public int getRollno() {
+        return rollno;
+    }
+
+    public void setRollno(int rollno) {
+        this.rollno = rollno;
+    }
+
+    // Getter and Setter for name
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // Getter and Setter for email
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    // toString Method
+    @Override
+    public String toString() {
+
+        return "Student [rollno=" + rollno
+                + ", name=" + name
+                + ", email=" + email + "]";
+    }
+}

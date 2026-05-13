@@ -1,0 +1,59 @@
+import com.wipro.ORMDemo.entity.Employee;
+import com.wipro.ORMDemo.dao.EmployeeDao;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.wipro.ORMDemo.entity.Employee;
+
+@Repository
+@Transactional
+public class EmployeeDaoImpl implements EmployeeDao {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    @Override
+    public void saveEmployee(Employee obj) {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(obj);
+        System.out.println("Employee Saved");
+    }
+
+    @Override
+    public Employee getEmployee(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Employee.class, id);
+    }
+
+    @Override
+    public List<Employee> getAll() {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria cr = session.createCriteria(Employee.class);
+        return cr.list();
+    }
+
+    @Override
+    public void updateEmployee(Employee emp) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(emp);
+        System.out.println("Employee Updated");
+    }
+
+    @Override
+    public void deleteEmployee(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        Employee emp = session.get(Employee.class, id);
+        if (emp != null) {
+            session.delete(emp);
+            System.out.println("Employee Deleted");
+        }
+    }
+}

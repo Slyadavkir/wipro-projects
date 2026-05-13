@@ -1,0 +1,74 @@
+body {
+    background-color: #f4f6f9;
+    font-family: Arial, sans-serif;
+}
+
+/* Main card styling */
+.card {
+    border-radius: 15px;
+    border: none;
+}
+
+/* Heading */
+h1, h2 {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Buttons */
+.btn-primary {
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+.btn-success {
+    border-radius: 8px;
+}
+
+/* Form */
+form {
+    margin-top: 20px;
+}
+
+/* Inputs */
+.form-control {
+    border-radius: 8px;
+    padding: 10px;
+}
+
+/* Table styling */
+.table {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Responsive spacing */
+.container {
+    padding: 20px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+
+    .card {
+        padding: 20px !important;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    .btn {
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .table {
+        font-size: 14px;
+    }
+}

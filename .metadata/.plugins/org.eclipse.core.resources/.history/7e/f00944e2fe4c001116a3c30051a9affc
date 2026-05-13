@@ -1,0 +1,15 @@
+package com.wipro.ORMDemo;
+
+import java.util.List;
+
+import org.hibernate.Session;
+
+public interface StudentDao {
+
+
+ void saveStudent(Student obj) ;
+
+ Student getStudent(int rollno) ;
+ List<Student> getAll() ;
+ void deleteStudent(int rollno);
+}

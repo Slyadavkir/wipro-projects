@@ -1,0 +1,94 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.contactmanager.model.Contact" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Contact Manager</title>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+
+<body>
+
+<div class="contact-card">
+
+    <h1>My Contacts</h1>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <%
+
+                List<Contact> contacts =
+                        (List<Contact>)
+                                session.getAttribute("contacts");
+
+                if(contacts!=null &&
+                        !contacts.isEmpty()){
+
+                    for(Contact c : contacts){
+
+            %>
+
+            <tr>
+
+                <td><%= c.getName() %></td>
+                <td><%= c.getPhone() %></td>
+                <td><%= c.getEmail() %></td>
+
+            </tr>
+
+            <%
+                    }
+
+                }else{
+            %>
+
+            <tr>
+
+                <td colspan="3"
+                    class="empty-msg">
+
+                    No contacts added yet
+
+                </td>
+
+            </tr>
+
+            <%
+                }
+            %>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

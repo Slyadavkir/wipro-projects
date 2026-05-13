@@ -1,0 +1,129 @@
+package com.wipro.ORMDemo;
+
+import java.util.List;
+import java.util.Scanner;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.wipro.ORMDemo.dao.EmployeeDao;
+import com.wipro.ORMDemo.entity.Employee;
+
+public class App {
+
+    public static void main(String[] args) {
+
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext(MyConfig.class);
+
+        EmployeeDao dao = context.getBean(EmployeeDao.class);
+
+        Scanner sc = new Scanner(System.in);
+
+        while (true) {
+
+            System.out.println("\n1.Save");
+            System.out.println("2.Get By Id");
+            System.out.println("3.Get All");
+            System.out.println("4.Update");
+            System.out.println("5.Delete");
+            System.out.println("6.Exit");
+
+            System.out.println("Enter Choice:");
+
+            int ch = sc.nextInt();
+
+            switch (ch) {
+
+            case 1:
+
+                System.out.println("Enter id:");
+                int id = sc.nextInt();
+
+                System.out.println("Enter name:");
+                String name = sc.next();
+
+                System.out.println("Enter salary:");
+                double salary = sc.nextDouble();
+
+                Employee emp =
+                        new Employee(id, name, salary);
+
+                dao.saveEmployee(emp);
+
+                break;
+
+            case 2:
+
+                System.out.println("Enter id:");
+                int eid = sc.nextInt();
+
+                Employee e = dao.getEmployee(eid);
+
+                if (e != null) {
+
+                    System.out.println(e.getId());
+                    System.out.println(e.getName());
+                    System.out.println(e.getSalary());
+
+                } else {
+
+                    System.out.println("Employee Not Found");
+                }
+
+                break;
+
+            case 3:
+
+                List<Employee> list = dao.getAll();
+
+                for (Employee obj : list) {
+
+                    System.out.println(
+                            obj.getId() + " "
+                          + obj.getName() + " "
+                          + obj.getSalary());
+                }
+
+                break;
+
+            case 4:
+
+                System.out.println("Enter Employee Id:");
+                int uid = sc.nextInt();
+
+                Employee up = dao.getEmployee(uid);
+
+                if (up != null) {
+
+                    System.out.println("Enter New Name:");
+                    up.setName(sc.next());
+
+                    System.out.println("Enter New Salary:");
+                    up.setSalary(sc.nextDouble());
+
+                    dao.updateEmployee(up);
+
+                } else {
+
+                    System.out.println("Employee Not Found");
+                }
+
+                break;
+
+            case 5:
+
+                System.out.println("Enter Id:");
+                int did = sc.nextInt();
+
+                dao.deleteEmployee(did);
+
+                break;
+
+            case 6:
+
+                System.exit(0);
+            }
+        }
+    }
+}

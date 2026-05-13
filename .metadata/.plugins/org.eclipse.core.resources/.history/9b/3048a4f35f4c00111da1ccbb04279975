@@ -1,0 +1,27 @@
+<div class="contact-card">
+
+    <h1>My Contacts</h1>
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <!-- Loop contacts here -->
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

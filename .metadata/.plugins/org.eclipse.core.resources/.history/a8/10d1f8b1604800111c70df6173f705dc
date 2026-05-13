@@ -1,0 +1,28 @@
+package com.example.servlet;
+
+import java.io.IOException;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+
+@WebServlet("/Demo")
+public class DemoServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession(false);
+        response.setContentType("text/html");
+
+        if (session != null) {
+            String name = (String) session.getAttribute("username");
+
+            response.getWriter().println("Session value: " + name);
+            response.getWriter().println("<br><br>");
+            response.getWriter().println("<a href='Logout'>Logout</a>");
+
+        } else {
+            response.getWriter().println("No session found.");
+        }
+    }
+}

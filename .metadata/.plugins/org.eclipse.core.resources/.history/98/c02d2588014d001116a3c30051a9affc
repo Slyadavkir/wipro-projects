@@ -1,0 +1,178 @@
+package com.wipro.ORMDemo.dao;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+@Repository
+@Transactional
+public class EmployeeDaoImpl implements EmployeeDao {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    // Save Employee
+    @Override
+    public void saveEmployee(Employee obj) {
+
+        Session session = sessionFactory.getCurrentSession();
+        session.save(obj);
+
+        System.out.println("Employee Saved Successfully");
+    }
+
+    // Get Employee By ID
+    @Override
+    public Employee getEmployee(int id) {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Employee emp = (Employee) session.get(Employee.class, id);
+
+        return emp;
+    }
+
+    // Get All Employees
+    @Override
+    public List<Employee> getAll() {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Criteria cr = session.createCriteria(Employee.class);
+
+        return cr.list();
+    }
+
+    // Search Employee By Name
+    public List<Employee> searchEmployeeByName(String name) {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Criteria cr = session.createCriteria(Employee.class);
+
+        cr.add(Restrictions.ilike("name", name + "%"));
+
+        return cr.list();
+    }
+
+    // Fetch Employees Salary Greater Than
+    public List<Employee> fetchEmployeeSalary(double salary) {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Criteria cr = session.createCriteria(Employee.class);
+
+        cr.add(Restrictions.gt("salary", salary));
+
+        return cr.list();
+    }
+
+    // Fetch Employees Salary Between Range
+    public List<Employee> fetchEmployeeSalaryRange(double min, double max) {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Criteria cr = session.createCriteria(Employee.class);
+
+        cr.add(Restrictions.between("salary", min, max));
+
+        return cr.list();
+    }
+
+    // Get Total Employees Count
+    public Long fetchEmployeeTotal() {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Criteria cr = session.createCriteria(Employee.class);
+
+        cr.setProjection(Projections.rowCount());
+
+        return (Long) cr.uniqueResult();
+    }
+
+    // Get Maximum Salary
+    public Double maxEmployeeSalary() {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Criteria cr = session.createCriteria(Employee.class);
+
+        cr.setProjection(Projections.max("salary"));
+
+        return (Double) cr.uniqueResult();
+    }
+
+    // Get Minimum Salary
+    public Double minEmployeeSalary() {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Criteria cr = session.createCriteria(Employee.class);
+
+        cr.setProjection(Projections.min("salary"));
+
+        return (Double) cr.uniqueResult();
+    }
+
+    // Get Employees Ordered By Salary Descending
+    public List<Employee> sortBySalaryDesc() {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Criteria cr = session.createCriteria(Employee.class);
+
+        cr.addOrder(Order.desc("salary"));
+
+        return cr.list();
+    }
+
+    // Update Employee
+    @Override
+    public void updateEmployee(Employee emp) {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        session.update(emp);
+
+        System.out.println("Employee Updated Successfully");
+    }
+
+    // Delete Employee
+    @Override
+    public void deleteEmployee(int id) {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Employee emp = (Employee) session.get(Employee.class, id);
+
+        if (emp != null) {
+
+            session.delete(emp);
+
+            System.out.println("Employee Deleted Successfully");
+        }
+    }
+
+    // Pagination
+    public List<Employee> pagination(int start, int total) {
+
+        Session session = sessionFactory.getCurrentSession();
+
+        Criteria cr = session.createCriteria(Employee.class);
+
+        cr.setFirstResult(start);
+
+        cr.setMaxResults(total);
+
+        return cr.list();
+    }
+}

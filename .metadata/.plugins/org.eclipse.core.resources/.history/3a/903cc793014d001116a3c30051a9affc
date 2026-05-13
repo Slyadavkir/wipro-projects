@@ -1,0 +1,103 @@
+package com.wipro.ORMDemo;
+
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+@Configuration
+@EnableTransactionManagement
+@ComponentScan("com.wipro.ORMDemo")
+public class MyConfig {
+
+   
+    @Bean
+    public DataSource dataSource() {
+
+        DriverManagerDataSource dataSource =
+                new DriverManagerDataSource();
+
+      
+        dataSource.setDriverClassName(
+                "com.mysql.cj.jdbc.Driver");
+
+      
+        dataSource.setUrl(
+                "jdbc:mysql://localhost:3306/demo");
+
+      
+        dataSource.setUsername("root");
+
+   
+        dataSource.setPassword("Wipro@123");
+
+        return dataSource;
+    }
+
+  
+    @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+
+        LocalSessionFactoryBean sessionFactory =
+                new LocalSessionFactoryBean();
+
+      
+        sessionFactory.setDataSource(dataSource());
+
+        // Scan Entity Classes
+        sessionFactory.setPackagesToScan(
+                "com.wipro.ORMDemo");
+
+        
+        sessionFactory.setHibernateProperties(
+                hibernateProperties());
+
+        return sessionFactory;
+    }
+
+  
+    private Properties hibernateProperties() {
+
+        Properties propobj = new Properties();
+
+        // MySQL Dialect
+        propobj.put(
+                "hibernate.dialect",
+                "org.hibernate.dialect.MySQL8Dialect");
+
+     
+        propobj.put(
+                "hibernate.show_sql",
+                "true");
+
+   
+        propobj.put(
+                "hibernate.hbm2ddl.auto",
+                "update");
+
+        return propobj;
+    }
+
+    // Transaction Manager
+    @Bean
+    public HibernateTransactionManager transactionManager() {
+
+        HibernateTransactionManager txManager =
+                new HibernateTransactionManager();
+
+        txManager.setSessionFactory(
+                sessionFactory().getObject());
+
+        return txManager;
+    }
+}

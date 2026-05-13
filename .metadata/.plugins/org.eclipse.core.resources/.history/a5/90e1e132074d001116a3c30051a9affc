@@ -1,0 +1,17 @@
+package com.wipro.ORMDemo.dao;
+import com.wipro.ORMDemo.entity.Employee; ✅
+import java.util.List;
+import com.wipro.ORMDemo.entity.Employee;
+
+public interface EmployeeDao {
+
+    void saveEmployee(Employee obj);
+
+    Employee getEmployee(int id);
+
+    List<Employee> getAll();
+
+    void updateEmployee(Employee emp);
+
+    void deleteEmployee(int id);
+}

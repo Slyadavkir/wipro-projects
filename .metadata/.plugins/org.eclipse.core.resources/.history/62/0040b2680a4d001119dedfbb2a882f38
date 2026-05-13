@@ -1,0 +1,17 @@
+
+
+import java.util.List;
+
+
+public interface EmployeeDao {
+
+    void saveEmployee(Employee obj);
+
+    Employee getEmployee(int id);
+
+    List<Employee> getAll();
+
+    void updateEmployee(Employee emp);
+
+    void deleteEmployee(int id);
+}

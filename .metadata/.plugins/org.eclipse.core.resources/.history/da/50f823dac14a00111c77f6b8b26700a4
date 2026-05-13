@@ -1,0 +1,12 @@
+package com.wipro.ORMDemo;
+
+import java.util.List;
+
+public interface StudentDao {
+
+    void saveStudent(Student obj);
+
+    Student getStudent(int rollno);
+
+    List<Student> getAll();
+}

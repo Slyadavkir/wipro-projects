@@ -1,0 +1,47 @@
+package com.wipro.ORMDemo.dao;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.wipro.ORMDemo.entity.Employee;
+
+@Repository
+@Transactional
+public class EmployeeDaoImpl {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    public void saveEmployee(Employee e) {
+        sessionFactory.getCurrentSession().save(e);
+    }
+
+    public Employee getEmployee(int id) {
+        return sessionFactory.getCurrentSession().get(Employee.class, id);
+    }
+
+    public List<Employee> getAll() {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        return c.list();
+    }
+
+    public void updateEmployee(Employee e) {
+        sessionFactory.getCurrentSession().update(e);
+    }
+
+    public void deleteEmployee(int id) {
+        Session s = sessionFactory.getCurrentSession();
+        Employee e = s.get(Employee.class, id);
+        if (e != null) {
+            s.delete(e);
+        }
+    }
+}

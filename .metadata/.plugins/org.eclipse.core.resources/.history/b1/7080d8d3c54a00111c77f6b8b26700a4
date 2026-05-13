@@ -1,0 +1,118 @@
+package com.wipro.ORMDemo;
+
+import java.util.Scanner;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class App {
+
+    public static void main(String[] args) {
+
+        // Start Spring Container
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext(
+                        MyConfig.class);
+
+        // Get DAO Bean
+        StudentDao studentDao =
+                context.getBean(StudentDao.class);
+
+        Scanner s = new Scanner(System.in);
+
+        System.out.println("===== Student Management System =====");
+
+        System.out.println("1. Save Student");
+        System.out.println("2. Get Student");
+        System.out.println("3. Delete Student");
+        System.out.println("4. Display All Students");
+
+        System.out.println("Enter Your Choice:");
+
+        int choice = s.nextInt();
+
+        switch(choice) {
+
+        // SAVE STUDENT
+        case 1:
+
+            System.out.println("Enter Roll Number:");
+            int rollno = s.nextInt();
+
+            System.out.println("Enter Name:");
+            String name = s.next();
+
+            System.out.println("Enter Email:");
+            String email = s.next();
+
+            Student obj1 = new Student();
+
+            obj1.setRollno(rollno);
+            obj1.setName(name);
+            obj1.setEmail(email);
+
+            studentDao.saveStudent(obj1);
+
+            System.out.println("Student Saved Successfully");
+
+            break;
+
+        // GET STUDENT
+        case 2:
+
+            System.out.println("Enter Roll Number:");
+
+            int rno = s.nextInt();
+
+            Student obj2 =
+                    studentDao.getStudent(rno);
+
+            if(obj2 != null) {
+
+                System.out.println(
+                        obj2.getRollno() + " "
+                      + obj2.getName() + " "
+                      + obj2.getEmail());
+            }
+            else {
+
+                System.out.println("Student Not Found");
+            }
+
+            break;
+
+        // DELETE STUDENT
+        case 3:
+
+            System.out.println(
+                    "Enter Roll Number to Delete:");
+
+            int delRollno = s.nextInt();
+
+            studentDao.deleteStudent(delRollno);
+
+            break;
+
+        // DISPLAY ALL STUDENTS
+        case 4:
+
+            System.out.println("Student List:");
+
+            for(Student st : studentDao.getAll()) {
+
+                System.out.println(
+                        st.getRollno() + " "
+                      + st.getName() + " "
+                      + st.getEmail());
+            }
+
+            break;
+
+        default:
+
+            System.out.println("Invalid Choice");
+        }
+
+        s.close();
+    }
+}

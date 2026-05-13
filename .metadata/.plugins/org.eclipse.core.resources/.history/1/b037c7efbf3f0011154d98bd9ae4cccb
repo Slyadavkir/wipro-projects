@@ -1,0 +1,33 @@
+
+import java.util.*;
+public class Threads {
+
+	public static void main(String[] args) {
+		Shared s = new Shared();
+
+		Thread o1 = new Thread( () -> {
+			try {
+				s.waitForSignal();
+			} catch (InterruptedException e) {
+				System.out.println(e);
+			}
+		});
+
+		Thread o2 = new Thread( () -> {
+					try {
+						Thread.sleep(2000);
+						s.sendSignal();
+					} catch (Exception e) {
+						System.out.println(e);
+					}
+				}
+
+		);
+
+		o1.start();
+		o2.start();
+
+	}
+
+}
+

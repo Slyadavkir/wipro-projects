@@ -1,0 +1,40 @@
+package com.example.servlet;
+
+import java.io.IOException;
+import javax.servlet.*;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+
+@WebServlet("/Demo")
+public class DemoServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        HttpSession session = request.getSession(false);
+        response.setContentType("text/html");
+
+        if (session != null && session.getAttribute("username") != null) {
+
+            String name = (String) session.getAttribute("username");
+
+            response.getWriter().println(
+                "<html><head><style>" +
+                "body{font-family:Arial;background:#f4f4f4;text-align:center;padding-top:100px;}" +
+                ".box{background:white;padding:30px;border-radius:10px;width:350px;margin:auto;box-shadow:0 5px 15px rgba(0,0,0,0.2);}" +
+                "a{display:inline-block;margin-top:20px;padding:10px 20px;background:#ff4b5c;color:white;text-decoration:none;border-radius:5px;}" +
+                "</style></head><body>" +
+
+                "<div class='box'>" +
+                "<h2>Welcome, " + name + "</h2>" +
+                "<a href='Logout'>Logout</a>" +
+                "</div>" +
+
+                "</body></html>"
+            );
+
+        } else {
+            response.sendRedirect("login.html");
+        }
+    }
+}

@@ -1,0 +1,39 @@
+package com.contactmanager.servlet;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
+import com.contactmanager.model.Contact;
+import java.util.ArrayList;
+import java.util.List;
+
+@WebServlet("/addContact")
+public class AddContactServlet extends HttpServlet {
+
+    protected void doPost(HttpServletRequest request,
+                          HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String email = request.getParameter("email");
+
+        Contact contact = new Contact(name, phone, email);
+
+        HttpSession session = request.getSession();
+
+        List<Contact> contacts =
+                (List<Contact>) session.getAttribute("contacts");
+
+        if (contacts == null) {
+            contacts = new ArrayList<>();
+        }
+
+        contacts.add(contact);
+
+        session.setAttribute("contacts", contacts);
+
+        response.sendRedirect("contacts.jsp");
+    }
+}

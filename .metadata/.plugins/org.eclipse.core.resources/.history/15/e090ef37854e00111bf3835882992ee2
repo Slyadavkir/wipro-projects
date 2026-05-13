@@ -1,0 +1,37 @@
+package com.wipro.ORMDemo.dao;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.wipro.ORMDemo.entity.Employee;
+
+public class EmployeeDaoImpl {
+              
+	    @Autowired
+	    private SessionFactory sessionFactory;
+
+	   
+
+	    public void getAllEmployees() {
+
+	        Session session = sessionFactory.openSession();
+
+	        String sql = "SELECT * FROM employee";
+
+	    
+	        List<Employee> list = session.createNativeQuery(sql, Employee.class).list();
+
+
+	        for (Employee e : list) {
+	            System.out.println(e.getId() + " "
+	                    + e.getName() + " "
+	                    + e.getSalary());
+	        }
+
+	        session.close();
+	    }
+	}

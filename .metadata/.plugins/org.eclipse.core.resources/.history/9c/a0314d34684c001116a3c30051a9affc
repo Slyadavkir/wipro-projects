@@ -1,0 +1,103 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Contact Manager</title>
+
+    <link rel="stylesheet"
+      href="${pageContext.request.contextPath}/css/style.css">
+
+</head>
+
+<body>
+
+<div class="contact-card">
+
+    <h1>Contact Manager</h1>
+
+    <p class="subtitle">
+        Manage your contacts efficiently
+    </p>
+
+    <button class="add-btn"
+            onclick="toggleForm()">
+
+        + Add Contact
+
+    </button>
+
+    <div class="form-container"
+         id="contactForm">
+
+        <form action="addContact"
+              method="post">
+
+            <div class="input-group">
+
+                <label>Name</label>
+
+                <input type="text"
+                       name="name"
+                       placeholder="Enter full name"
+                       required>
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Phone</label>
+
+                <input type="text"
+                       name="phone"
+                       placeholder="Enter phone number"
+                       required>
+
+            </div>
+
+            <div class="input-group">
+
+                <label>Email</label>
+
+                <input type="email"
+                       name="email"
+                       placeholder="Enter email address"
+                       required>
+
+            </div>
+
+            <button type="submit"
+                    class="save-btn">
+
+                Save Contact
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+    function toggleForm(){
+
+        let form =
+            document.getElementById("contactForm");
+
+        if(form.style.display==="block"){
+
+            form.style.display="none";
+
+        }else{
+
+            form.style.display="block";
+        }
+    }
+
+</script>
+
+</body>
+</html>

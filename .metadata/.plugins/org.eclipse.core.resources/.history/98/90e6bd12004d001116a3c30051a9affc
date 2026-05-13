@@ -1,0 +1,5 @@
+package com.wipro.ORMDemo.dao;
+
+public class EmployeeDaoImpl {
+
+}

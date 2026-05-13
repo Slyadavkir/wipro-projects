@@ -1,0 +1,103 @@
+package com.wipro.ORMDemo;
+
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+@Configuration
+@EnableTransactionManagement
+@ComponentScan("com.wipro.ORMDemo")
+public class MyConfig {
+
+    // Database Connection
+    @Bean
+    public DataSource dataSource() {
+
+        DriverManagerDataSource dataSource =
+                new DriverManagerDataSource();
+
+        // MySQL Driver
+        dataSource.setDriverClassName(
+                "com.mysql.cj.jdbc.Driver");
+
+        // Database URL
+        dataSource.setUrl(
+                "jdbc:mysql://localhost:3306/demo");
+
+        // MySQL Username
+        dataSource.setUsername("root");
+
+        // MySQL Password
+        dataSource.setPassword("Wipro@123");
+
+        return dataSource;
+    }
+
+    // Hibernate Session Factory
+    @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+
+        LocalSessionFactoryBean sessionFactory =
+                new LocalSessionFactoryBean();
+
+        // DataSource
+        sessionFactory.setDataSource(dataSource());
+
+        // Scan Entity Classes
+        sessionFactory.setPackagesToScan(
+                "com.wipro.ORMDemo");
+
+        // Hibernate Properties
+        sessionFactory.setHibernateProperties(
+                hibernateProperties());
+
+        return sessionFactory;
+    }
+
+    // Hibernate Properties
+    private Properties hibernateProperties() {
+
+        Properties propobj = new Properties();
+
+        // MySQL Dialect
+        propobj.put(
+                "hibernate.dialect",
+                "org.hibernate.dialect.MySQL8Dialect");
+
+        // Show SQL Queries
+        propobj.put(
+                "hibernate.show_sql",
+                "true");
+
+        // Auto Table Update
+        propobj.put(
+                "hibernate.hbm2ddl.auto",
+                "update");
+
+        return propobj;
+    }
+
+    // Transaction Manager
+    @Bean
+    public HibernateTransactionManager transactionManager() {
+
+        HibernateTransactionManager txManager =
+                new HibernateTransactionManager();
+
+        txManager.setSessionFactory(
+                sessionFactory().getObject());
+
+        return txManager;
+    }
+}

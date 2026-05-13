@@ -1,0 +1,12 @@
+package com.wipro.ORMDemo.dao;
+
+public interface StudentDao {
+
+    void insertStudent(Student student);
+
+    void getAllStudents();
+
+    void updateStudent(double marks, int studentId);
+
+    void deleteStudent(int studentId);
+}

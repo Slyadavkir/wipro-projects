@@ -1,0 +1,16 @@
+
+May 05, 2026 11:48:55.955 NEW SESSION
+May 05, 2026 11:48:55.955 Created TensorFlow Lite XNNPACK delegate for CPU.
+May 05, 2026 11:49:02.653 [5728:14720:0505/114902.652:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+May 05, 2026 11:49:32.345 [5728:14720:0505/114932.345:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+May 05, 2026 11:50:30.207 [5728:14720:0505/115030.207:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+May 05, 2026 11:51:55.218 [5728:16968:0505/115155.217:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:53] Requested load of chrome://newtab/ for incorrect profile type.
+May 05, 2026 11:51:55.893 [5728:16968:0505/115155.890:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:53] Requested load of chrome://newtab/ for incorrect profile type.
+May 05, 2026 11:51:55.945 [5728:16968:0505/115155.942:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:53] Requested load of chrome://newtab/ for incorrect profile type.
+May 05, 2026 11:51:59.216 [5728:16968:0505/115159.214:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:53] Requested load of chrome://newtab/ for incorrect profile type.
+May 05, 2026 11:52:25.392 [5728:14720:0505/115225.391:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+May 05, 2026 11:55:59.88 [5728:14720:0505/115559.087:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+May 05, 2026 12:01:29.899 [5728:14720:0505/120129.893:ERROR:google_apis\gcm\engine\registration_request.cc:291] Registration response error message: DEPRECATED_ENDPOINT
+May 05, 2026 12:21:53.110 [5728:16968:0505/122153.102:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:53] Requested load of chrome://newtab/ for incorrect profile type.
+May 05, 2026 12:21:53.437 [5728:16968:0505/122153.436:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:53] Requested load of chrome://newtab/ for incorrect profile type.
+May 05, 2026 12:21:54.75 [5728:16968:0505/122154.075:ERROR:chrome\browser\ui\webui\ntp\new_tab_ui.cc:53] Requested load of chrome://newtab/ for incorrect profile type.

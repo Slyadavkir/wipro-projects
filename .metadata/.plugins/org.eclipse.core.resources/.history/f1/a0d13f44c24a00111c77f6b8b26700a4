@@ -1,0 +1,60 @@
+package com.wipro.ORMDemo;
+
+import java.util.Scanner;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class App {
+
+    public static void main(String[] args) {
+
+     
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext(
+                        MyConfig.class);
+
+       
+        StudentDao studentDao =
+                context.getBean(StudentDao.class);
+
+       
+        Scanner s = new Scanner(System.in);
+
+        System.out.println("Enter Student Details");
+
+        System.out.println("Enter Roll Number:");
+        int rollno = s.nextInt();
+
+        System.out.println("Enter Name:");
+        String name = s.next();
+
+        System.out.println("Enter Email:");
+        String email = s.next();
+
+        
+        Student obj1 = new Student();
+
+        obj1.setRollno(rollno);
+        obj1.setName(name);
+        obj1.setEmail(email);
+
+     
+        studentDao.saveStudent(obj1);
+
+        System.out.println("Student Saved Successfully");
+
+       
+        Student obj2 =
+                studentDao.getStudent(rollno);
+
+      
+        System.out.println(
+                obj2.getRollno() + " "
+              + obj2.getName() + " "
+              + obj2.getEmail());
+
+        
+        s.close();
+    }
+}

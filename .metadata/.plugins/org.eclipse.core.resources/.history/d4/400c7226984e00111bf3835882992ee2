@@ -1,0 +1,6 @@
+package com.wipro.ORMDemo.dao;
+
+public class StudentDaoImpl  implements StudentDao{
+
+
+}

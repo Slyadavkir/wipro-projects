@@ -1,0 +1,5 @@
+package com.wipro.ORMDemo;
+
+public class StudentDao {
+
+}

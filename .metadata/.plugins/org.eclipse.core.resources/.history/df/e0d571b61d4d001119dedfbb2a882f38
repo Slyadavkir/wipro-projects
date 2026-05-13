@@ -1,0 +1,120 @@
+package com.wipro.ORMDemo.dao;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.wipro.ORMDemo.entity.Employee;
+
+@Repository
+@Transactional
+public class EmployeeDaoImpl {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    // Save Employee
+    public void saveEmployee(Employee e) {
+        sessionFactory.getCurrentSession().save(e);
+    }
+
+    // Get Employee by ID
+    public Employee getEmployee(int id) {
+        return sessionFactory.getCurrentSession().get(Employee.class, id);
+    }
+
+    // Get All Employees
+    public List<Employee> getAll() {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        return c.list();
+    }
+
+    // Update Employee
+    public void updateEmployee(Employee e) {
+        sessionFactory.getCurrentSession().update(e);
+    }
+
+    // Delete Employee
+    public void deleteEmployee(int id) {
+        Session s = sessionFactory.getCurrentSession();
+        Employee e = s.get(Employee.class, id);
+        if (e != null) {
+            s.delete(e);
+        }
+    }
+
+    // Search by name
+    public List<Employee> searchByName(String name) {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.add(Restrictions.ilike("name", name + "%"));
+        return c.list();
+    }
+
+    // Salary greater than
+    public List<Employee> salaryGreaterThan(double salary) {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.add(Restrictions.gt("salary", salary));
+        return c.list();
+    }
+
+    // Salary range
+    public List<Employee> salaryRange(double min, double max) {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.add(Restrictions.between("salary", min, max));
+        return c.list();
+    }
+
+    // Total employees
+    public Long countEmployees() {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.setProjection(Projections.rowCount());
+        return (Long) c.uniqueResult();
+    }
+
+    // Max salary
+    public Double maxSalary() {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.setProjection(Projections.max("salary"));
+        return (Double) c.uniqueResult();
+    }
+
+    // Min salary
+    public Double minSalary() {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.setProjection(Projections.min("salary"));
+        return (Double) c.uniqueResult();
+    }
+
+    // Sort by salary desc
+    public List<Employee> sortBySalaryDesc() {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.addOrder(Order.desc("salary"));
+        return c.list();
+    }
+
+    // Pagination
+    public List<Employee> pagination(int start, int total) {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.setFirstResult(start);
+        c.setMaxResults(total);
+        return c.list();
+    }
+}

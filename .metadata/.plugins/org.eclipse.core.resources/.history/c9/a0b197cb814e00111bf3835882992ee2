@@ -1,0 +1,220 @@
+package com.wipro.ORMDemo.dao;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
+
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.wipro.ORMDemo.entity.Employee;
+
+@Repository
+@Transactional
+public class EmployeeDaoImpl {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
+    // =========================
+    // BASIC CRUD (Criteria Style)
+    // =========================
+
+    public void saveEmployee(Employee e) {
+        sessionFactory.getCurrentSession().save(e);
+    }
+
+    public Employee getEmployee(int id) {
+        return sessionFactory.getCurrentSession().get(Employee.class, id);
+    }
+
+    public List<Employee> getAll() {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        return c.list();
+    }
+
+    public void updateEmployee(Employee e) {
+        sessionFactory.getCurrentSession().update(e);
+    }
+
+    public void deleteEmployee(int id) {
+        Session s = sessionFactory.getCurrentSession();
+        Employee e = s.get(Employee.class, id);
+        if (e != null) {
+            s.delete(e);
+        }
+    }
+
+    // =========================
+    // CRITERIA QUERIES
+    // =========================
+
+    public List<Employee> searchByName(String name) {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.add(Restrictions.ilike("name", name + "%"));
+        return c.list();
+    }
+
+    public List<Employee> salaryGreaterThan(double salary) {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.add(Restrictions.gt("salary", salary));
+        return c.list();
+    }
+
+    public List<Employee> salaryRange(double min, double max) {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.add(Restrictions.between("salary", min, max));
+        return c.list();
+    }
+
+    public Long countEmployees() {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.setProjection(Projections.rowCount());
+        return (Long) c.uniqueResult();
+    }
+
+    public Double maxSalary() {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.setProjection(Projections.max("salary"));
+        return (Double) c.uniqueResult();
+    }
+
+    public Double minSalary() {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.setProjection(Projections.min("salary"));
+        return (Double) c.uniqueResult();
+    }
+
+    public List<Employee> sortBySalaryDesc() {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.addOrder(Order.desc("salary"));
+        return c.list();
+    }
+
+    public List<Employee> pagination(int start, int total) {
+        Session s = sessionFactory.getCurrentSession();
+        Criteria c = s.createCriteria(Employee.class);
+        c.setFirstResult(start);
+        c.setMaxResults(total);
+        return c.list();
+    }
+
+    // =========================
+    // HQL QUERIES (NEW ADDITION)
+    // =========================
+
+    // LIKE
+    public List<Employee> hqlSearchByName(String name) {
+        Session s = sessionFactory.getCurrentSession();
+
+        Query<Employee> q = s.createQuery(
+            "from Employee where name like :name", Employee.class
+        );
+
+        q.setParameter("name", name + "%");
+        return q.list();
+    }
+
+    // AND condition
+    public List<Employee> hqlAndCondition(String name, double salary) {
+        Session s = sessionFactory.getCurrentSession();
+
+        Query<Employee> q = s.createQuery(
+            "from Employee where name = :name and salary = :salary",
+            Employee.class
+        );
+
+        q.setParameter("name", name);
+        q.setParameter("salary", salary);
+
+        return q.list();
+    }
+
+    // OR condition
+    public List<Employee> hqlOrCondition(String name, double salary) {
+        Session s = sessionFactory.getCurrentSession();
+
+        Query<Employee> q = s.createQuery(
+            "from Employee where name = :name or salary = :salary",
+            Employee.class
+        );
+
+        q.setParameter("name", name);
+        q.setParameter("salary", salary);
+
+        return q.list();
+    }
+
+    // ORDER BY ASC
+    public List<Employee> hqlOrderByAsc() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from Employee order by salary asc", Employee.class)
+                .list();
+    }
+
+    // ORDER BY DESC
+    public List<Employee> hqlOrderByDesc() {
+        return sessionFactory.getCurrentSession()
+                .createQuery("from Employee order by salary desc", Employee.class)
+                .list();
+    }
+
+    // IN operator
+    public List<Employee> hqlInOperator(List<Integer> ids) {
+        Session s = sessionFactory.getCurrentSession();
+
+        Query<Employee> q = s.createQuery(
+            "from Employee where id in (:ids)", Employee.class
+        );
+
+        q.setParameter("ids", ids);
+
+        return q.list();
+    }
+
+    // BETWEEN
+    public List<Employee> hqlBetween(double min, double max) {
+        Session s = sessionFactory.getCurrentSession();
+
+        Query<Employee> q = s.createQuery(
+            "from Employee where salary between :min and :max",
+            Employee.class
+        );
+
+        q.setParameter("min", min);
+        q.setParameter("max", max);
+
+        return q.list();
+    }
+
+    // COMPLEX (AND + LIKE + ORDER BY)
+    public List<Employee> hqlComplex(String name, double salary) {
+        Session s = sessionFactory.getCurrentSession();
+
+        Query<Employee> q = s.createQuery(
+            "from Employee where name like :name and salary > :salary order by salary desc",
+            Employee.class
+        );
+
+        q.setParameter("name", name + "%");
+        q.setParameter("salary", salary);
+
+        return q.list();
+    }
+}

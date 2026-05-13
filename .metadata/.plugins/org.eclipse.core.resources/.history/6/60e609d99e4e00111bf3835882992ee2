@@ -1,0 +1,18 @@
+package com.wipro.ORMDemo.dao;
+
+import com.wipro.ORMDemo.entity.Student;
+
+public interface StudentDao {
+
+    // INSERT
+    void insertStudent(Student student);
+
+    // SELECT
+    void getAllStudents();
+
+    // UPDATE
+    void updateStudent(String email, int rollno);
+
+    // DELETE
+    void deleteStudent(int rollno);
+}

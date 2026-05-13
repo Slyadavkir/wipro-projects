@@ -1,0 +1,38 @@
+package com.wipro.ORMDemo;
+
+import java.util.List;
+import java.util.Scanner;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.wipro.ORMDemo.dao.EmployeeDaoImpl;
+import com.wipro.ORMDemo.dao.StudentDao;
+import com.wipro.ORMDemo.entity.Employee;
+import com.wipro.ORMDemo.entity.Student;
+
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+
+public class App {
+
+    public static void main(String[] args) {
+
+        ApplicationContext context = new 
+     AnnotationConfigApplicationContext(MyConfig.class);
+
+        EmployeeDaoImpl dao =  context.getBean( EmployeeDaoImpl.class);
+
+//        
+//        Employee emp = new Employee();
+//        emp.setId(1);
+//        emp.setName("Rahul");
+//        emp.setSalary(25000);
+//        
+//        dao.insertEmployee(emp);
+        dao.deleteEmployee(2);
+        //dao.getAllEmployees();
+    }
+}

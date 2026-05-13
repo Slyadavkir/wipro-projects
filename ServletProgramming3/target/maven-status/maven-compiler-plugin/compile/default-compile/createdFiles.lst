@@ -1,0 +1,4 @@
+com\example\servlet\DemoServlet.class
+com\example\servlet\DBConnection.class
+com\example\servlet\LoginServlet.class
+com\example\servlet\LogoutServlet.class

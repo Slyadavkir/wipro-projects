@@ -1,0 +1,37 @@
+package com.wipro.ORMDemo;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import com.wipro.ORMDemo.dao.EmployeeDaoImpl;
+import com.wipro.ORMDemo.entity.Employee;
+
+public class App {
+
+    public static void main(String[] args) {
+
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext(MyConfig.class);
+
+        EmployeeDaoImpl dao =
+                context.getBean(EmployeeDaoImpl.class);
+
+        // INSERT
+//        Employee emp = new Employee();
+//
+//        emp.setId(1);
+//        emp.setName("Rahul");
+//        emp.setSalary(25000);
+//
+//        dao.insertEmployee(emp);
+
+        // UPDATE
+//        dao.updateEmployee(50000, 1);
+
+        // DELETE
+        dao.deleteEmployee(2);
+
+        // SELECT
+//        dao.getAllEmployees();
+    }
+}

@@ -1,0 +1,44 @@
+package com.contactmanager.servlet;
+
+import com.contactmanager.model.Contact;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.WebServlet;
+import java.io.IOException;
+import java.util.List;
+
+@WebServlet("/deleteContact")
+public class DeleteContactServlet extends HttpServlet {
+
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response)
+            throws IOException {
+
+        String email = request.getParameter("email");
+
+        HttpSession session = request.getSession();
+
+        List<Contact> contacts =
+                (List<Contact>) session.getAttribute("contacts");
+
+        if (contacts == null || contacts.isEmpty()) {
+            session.setAttribute("message", "Error: No contacts to delete!");
+            response.sendRedirect("contacts.jsp");
+            return;
+        }
+
+        boolean removed = contacts.removeIf(c -> c.getEmail().equals(email));
+
+        if (removed) {
+            session.setAttribute("message", "Contact deleted successfully!");
+        } else {
+            session.setAttribute("message", "Error: Contact not found!");
+        }
+
+        session.setAttribute("contacts", contacts);
+
+        response.sendRedirect("contacts.jsp");
+    }
+}

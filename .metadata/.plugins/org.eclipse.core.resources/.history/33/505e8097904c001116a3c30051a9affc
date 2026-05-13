@@ -1,0 +1,198 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Manager</title>
+
+    <style>
+
+        body{
+            margin:0;
+            padding:0;
+            font-family:Arial,sans-serif;
+            background:linear-gradient(to right,#4f46e5,#7c3aed);
+        }
+
+        .navbar{
+            background:#4f46e5;
+            padding:15px 30px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .logo{
+            color:white;
+            font-size:22px;
+            font-weight:bold;
+        }
+
+        .nav-links a{
+            color:white;
+            text-decoration:none;
+            margin-left:20px;
+            font-weight:bold;
+        }
+
+        .nav-links a:hover{
+            text-decoration:underline;
+        }
+
+        .main-container{
+            height:90vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .contact-card{
+            width:420px;
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:10px;
+            color:#222;
+        }
+
+        .subtitle{
+            text-align:center;
+            color:#666;
+            margin-bottom:25px;
+        }
+
+        .input-group{
+            margin-bottom:18px;
+        }
+
+        .input-group label{
+            display:block;
+            margin-bottom:6px;
+            font-weight:bold;
+            color:#333;
+        }
+
+        .input-group input{
+            width:100%;
+            padding:12px;
+            border:1px solid #ccc;
+            border-radius:6px;
+        }
+
+        .add-btn,
+        .save-btn{
+            width:100%;
+            padding:12px;
+            border:none;
+            border-radius:6px;
+            background:#4f46e5;
+            color:white;
+            cursor:pointer;
+        }
+
+        .add-btn:hover,
+        .save-btn:hover{
+            background:#3730a3;
+        }
+
+        .message{
+            text-align:center;
+            color:green;
+            margin-bottom:10px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="logo">Contact Manager</div>
+
+    <div class="nav-links">
+        <a href="<%= request.getContextPath() %>/">Home</a>
+        <a href="contacts.jsp">View Contacts</a>
+    </div>
+</div>
+
+<!-- CENTER -->
+<div class="main-container">
+
+    <div class="contact-card">
+
+        <h1>Contact Manager</h1>
+        <p class="subtitle">Manage your contacts efficiently</p>
+
+        <!-- SUCCESS MESSAGE -->
+      <%
+String msg = (String) session.getAttribute("message");
+if (msg != null) {
+%>
+
+<div style="color:green;text-align:center;">
+    <%= msg %>
+</div>
+
+<%
+session.removeAttribute("message");
+}
+%>
+
+        <button class="add-btn" onclick="toggleForm()">
+            + Add Contact
+        </button>
+
+        <div id="contactForm" style="display:none; margin-top:15px;">
+
+          <form action="addContact" method="post" onsubmit="return validateForm()">
+
+    <input type="text" name="name" placeholder="Name" required>
+
+    <input type="text" id="phone" name="phone" placeholder="Phone" required>
+
+    <input type="email" id="email" name="email" placeholder="Email" required>
+
+    <button type="submit">Save Contact</button>
+
+</form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function validateForm() {
+
+    let phone = document.getElementById("phone").value;
+    let email = document.getElementById("email").value;
+
+    // PHONE VALIDATION (10 digits)
+    let phonePattern = /^[0-9]{10}$/;
+    if (!phonePattern.test(phone)) {
+        alert("Phone number must be exactly 10 digits!");
+        return false;
+    }
+
+    // EMAIL VALIDATION
+    let emailPattern = /^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$/;
+    if (!emailPattern.test(email)) {
+        alert("Invalid email format!");
+        return false;
+    }
+
+    return true;
+}
+
+</script>
+
+</body>
+</html>

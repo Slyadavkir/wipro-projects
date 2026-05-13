@@ -1,0 +1,74 @@
+package com.wipro.ORMDemo.dao;
+
+import java.util.List;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.wipro.ORMDemo.entity.Employee;
+
+public class EmployeeDaoImpl {
+              
+	    @Autowired
+	    private SessionFactory sessionFactory;
+
+	   
+
+	    public void getAllEmployees() {
+
+	        Session session = sessionFactory.openSession();
+
+	        String sql = "SELECT * FROM employee";
+
+	    
+	        List<Employee> list = session.createNativeQuery(sql, Employee.class).list();
+
+
+	        for (Employee e : list) {
+	            System.out.println(e.getId() + " "
+	                    + e.getName() + " "
+	                    + e.getSalary());
+	        }
+
+	    	// UPDATE
+	    	public void updateEmployee(String salary,int empid) {
+
+	    	    Session session = sessionFactory.openSession();
+	            Transaction tx = session.beginTransaction();
+
+	            String sql = "UPDATE employee SET salary = :salary WHERE id = :empId";
+
+	            NativeQuery query = session.createNativeQuery(sql);
+	            query.setParameter("salary", salary);
+	            query.setParameter("empId", empid);
+
+	            int rows = query.executeUpdate();
+	     System.out.println("updated "+rows+" row");
+	            tx.commit();
+	            session.close();
+
+	            if (rows > 0) {
+	                System.out.println("Employee Updated Successfully");
+	            } else {
+	                System.out.println("Employee Not Found");
+	            }
+	        }
+	    	
+
+	    	// DELETE
+	    	public void deleteEmployee(int empid) {
+
+	    		Session session = sessionFactory.openSession();
+	    		Transaction tx = session.beginTransaction();
+	    		String sql = "delete from employee where id=:id";
+	    		NativeQuery query = session.createNativeQuery(sql).setParameter("id", empid);
+	    		int rows=query.executeUpdate();
+	    tx.commit();
+	    	System.out.println("deleted "+rows);
+	    		
+	    		session.close();
+	    	}
+	    }
+	}

@@ -1,0 +1,198 @@
+<%@ page import="java.util.List" %>
+<%@ page import="com.contactmanager.model.Contact" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>My Contacts</title>
+
+    <style>
+
+        body{
+            margin:0;
+            font-family:Arial,sans-serif;
+            background:#f4f4f4;
+        }
+
+        /* NAVBAR */
+
+        .navbar{
+            background:#4f46e5;
+            padding:15px 30px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .logo{
+            color:white;
+            font-size:22px;
+            font-weight:bold;
+        }
+
+        .nav-links a{
+            color:white;
+            text-decoration:none;
+            margin-left:20px;
+            font-weight:bold;
+        }
+
+        .nav-links a:hover{
+            text-decoration:underline;
+        }
+
+        /* TABLE CARD */
+
+        .container{
+            display:flex;
+            justify-content:center;
+            margin-top:50px;
+        }
+
+        .contact-card{
+            width:800px;
+            background:white;
+            padding:30px;
+            border-radius:12px;
+            box-shadow:0 4px 20px rgba(0,0,0,0.15);
+        }
+
+        h1{
+            text-align:center;
+            margin-bottom:25px;
+            color:#222;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        table th{
+            background:#4f46e5;
+            color:white;
+            padding:14px;
+            text-align:left;
+        }
+
+        table td{
+            padding:14px;
+            border-bottom:1px solid #ddd;
+        }
+
+        table tr:hover{
+            background:#f9f9f9;
+        }
+
+        .empty-msg{
+            text-align:center;
+            color:gray;
+            padding:20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+    <div class="logo">
+        Contact Manager
+    </div>
+
+    <div class="nav-links">
+
+        <a href="<%= request.getContextPath() %>/">
+            Home
+        </a>
+
+        <a href="<%= request.getContextPath() %>/contacts.jsp">
+            View Contacts
+        </a>
+
+    </div>
+
+</div>
+
+<!-- CONTACT TABLE -->
+
+<div class="container">
+
+    <div class="contact-card">
+
+        <h1>My Contacts</h1>
+
+        <table>
+
+            <thead>
+
+            <tr>
+
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            <%
+
+                List<Contact> contacts =
+                        (List<Contact>)
+                                session.getAttribute("contacts");
+
+                if(contacts != null &&
+                        !contacts.isEmpty()){
+
+                    for(Contact c : contacts){
+
+            %>
+
+            <tr>
+
+                <td><%= c.getName() %></td>
+                <td><%= c.getPhone() %></td>
+                <td><%= c.getEmail() %></td>
+
+            </tr>
+
+            <%
+                    }
+
+                }else{
+            %>
+
+            <tr>
+
+                <td colspan="3"
+                    class="empty-msg">
+
+                    No contacts added yet
+
+                </td>
+
+            </tr>
+
+            <%
+                }
+            %>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</body>
+</html>

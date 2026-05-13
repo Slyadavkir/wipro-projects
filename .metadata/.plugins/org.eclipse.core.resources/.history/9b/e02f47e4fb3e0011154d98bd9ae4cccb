@@ -1,0 +1,64 @@
+
+public class MapDemoExercise {
+
+    public static void main(String[] args) {
+
+        NavigationContext context = new NavigationContext();
+
+      
+        context.setStrategy(new FastestRoute());
+        context.buildRoute("vns", "Lucknow");
+
+     
+        context.setStrategy(new ShortestRoute());
+        context.buildRoute("vns", "Lucknow");
+
+        
+        context.setStrategy(new AvoidTollsRoute());
+        context.buildRoute("vns", "Lucknow");
+    }
+}
+
+// Strategy Interface
+interface RouteStrategy {
+    void buildRoute(String source, String destination);
+}
+
+
+class FastestRoute implements RouteStrategy {
+    public void buildRoute(String source, String destination) {
+        System.out.println("Fastest route from " + source + " to " + destination);
+    }
+}
+
+
+class ShortestRoute implements RouteStrategy {
+    public void buildRoute(String source, String destination) {
+        System.out.println("Shortest route from " + source + " to " + destination);
+    }
+}
+
+
+class AvoidTollsRoute implements RouteStrategy {
+    public void buildRoute(String source, String destination) {
+        System.out.println("Route avoiding tolls from " + source + " to " + destination);
+    }
+}
+
+
+class NavigationContext {
+
+    private RouteStrategy strategy;
+
+    public void setStrategy(RouteStrategy strategy) {
+        this.strategy = strategy;
+    }
+
+    public void buildRoute(String source, String destination) {
+        if (strategy == null) {
+            System.out.println("No strategy selected!");
+            return;
+        }
+        strategy.buildRoute(source, destination);
+    }
+}
